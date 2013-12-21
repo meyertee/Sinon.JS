@@ -1,3 +1,56 @@
+== 1.7.3 / 2013-06-20
+
+* Removed use of array forEach, breaks in older browsers (Martin Hansen)
+* sinon.deepEqual(new Date(0), new Date()) returns true (G.Serebryanskyi)
+
+== 1.7.2 / 2013-05-08
+
+* Sinon 1.7 has split calls out to a separate file. This caused some problems,
+  so 1.7.2 ships with spyCall as part of spy.js like it used to be.
+
+== 1.7.1 / 2013-05-07
+
+* Fake XMLHttpRequest updated to call onerror and onsuccess callbacks, fixing
+  jQuery 2.0 problems (Roman Potashow)
+* Implement XMLHttpRequest progress event api (Marten Lienen)
+* Added sinon.restore() (Jonny Reeves)
+* Fix bug where throwing a string was handled incorrectly by Sinon (Brandon Heyer)
+* Web workers support (Victor Costan)
+
+== 1.7.0
+
+* Failed release, see 1.7.1
+
+== 1.6.0 / 2013-02-18
+* Add methods to spyCall interface: callArgOn, callArgOnWith, yieldOn,
+  yieldToOn (William Sears)
+* sinon.createStubInstance creates a fully stubbed instance from a constructor
+  (Shawn Krisman)
+* resetBehavior resets fakes created by withArgs (Martin Sander)
+* The fake server now logs to sinon.log, if set (Luis Cardoso)
+* Cleaner npm package that also includes pkg/sinon.js and
+  pkg/sinon-ie.js for cases where npm is used to install Sinon for
+  browser usage (Domenic Denicola)
+* Improved spy formatter %C output (Farid Neshat)
+* clock.tick returns clock.now (Michael Jackson)
+* Fixed issue #248 with callOrder assertion
+  Did not fail if the last given spy was never called (Maximilian Antoni)
+* Fixed issue with setResponseHeader for synchronous requests (goligo)
+* Remove msSetImmediate; it only existed in IE10 previews (Domenic Denicola)
+* Fix #231: not always picking up the latest calls to callsArgWith, etc.
+  (Domenic Denicola)
+* Fix failing anonymous mock expectations
+
+== 1.5.2 / 2012-11-28
+* Revert stub.reset changes that caused existing tests to fail.
+
+== 1.5.1 / 2012-11-27
+* Ensure window.Image can be stubbed. (Adrian Phinney)
+* Fix spy() in IE 8 (Scott Andrews)
+* Fix sinon base in IE 8 (Scott Andrews)
+* Format arguments ouput when mock excpetation is not met (kbackowski)
+* Calling spy.reset directly from stub.reset (Thomas Meyer)
+
 == 1.5.0 / 2012-10-19
 * Don't force "use strict" on Sinon consumers
 * Don't assume objects have hasOwnProperties. Fixes problem with e.g.

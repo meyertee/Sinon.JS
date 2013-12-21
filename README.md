@@ -9,6 +9,10 @@ Standalone and test framework agnostic JavaScript test spies, stubs and mocks.
 via [npm (node package manager)](http://github.com/isaacs/npm)
 
     $ npm install sinon
+    
+via [NuGet (package manager for Microsoft development platform)](https://www.nuget.org/packages/SinonJS)
+
+    Install-Package SinonJS
 
 or install via git by cloning the repository and including sinon.js
 in your project, as you would any other third party library.
@@ -55,6 +59,10 @@ make sure you have a build (requires Ruby and Juicer):
     $ ./build
 
 Then open `test/sinon-dist.html` in a browser.
+
+If the build script is unable to find Juicer, try
+
+    $ ruby -rubygems build
 
 Some tests needs working XHR to pass. To run the tests over an HTTP server, run
 

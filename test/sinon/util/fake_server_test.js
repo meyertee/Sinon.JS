@@ -438,6 +438,18 @@ buster.testCase("sinon.fakeServer", {
             assert(handler.calledOnce);
         },
 
+        "yields response to request function handler when url contains RegExp characters": function () {
+            var handler = sinon.spy();
+            this.server.respondWith("GET", "/hello?world", handler);
+            var xhr = new sinon.FakeXMLHttpRequest();
+            xhr.open("GET", "/hello?world");
+            xhr.send();
+
+            this.server.respond();
+
+            assert(handler.calledOnce);
+        },
+
         "does not yield response to request function handler when method does not match": function () {
             var handler = sinon.spy();
             this.server.respondWith("GET", "/hello", handler);
@@ -599,7 +611,7 @@ buster.testCase("sinon.fakeServer", {
             this.get = function get(url) {
                 var request = new sinon.FakeXMLHttpRequest();
                 sinon.spy(request, "respond");
-                request.open("get", "/path", true);
+                request.open("get", url, true);
                 request.send();
                 return request;
             };
@@ -661,6 +673,39 @@ buster.testCase("sinon.fakeServer", {
             assert.isFalse(request.respond.called);
 
             this.clock.tick(1);
+            assert.isTrue(request.respond.calledOnce);
+        },
+
+        "auto-responds if two successive requests are made with a single XHR": function () {
+            this.server.autoRespond = true;
+
+            var request = this.get("/path");
+
+            this.clock.tick(10);
+
+            assert.isTrue(request.respond.calledOnce);
+
+            request.open("get", "/other", true);
+            request.send();
+
+            this.clock.tick(10);
+
+            assert.isTrue(request.respond.calledTwice);
+        },
+
+        "auto-responds if timeout elapses between creating a XHR object and sending a request with it": function () {
+            this.server.autoRespond = true;
+
+            var request = new sinon.FakeXMLHttpRequest();
+            sinon.spy(request, "respond");
+
+            this.clock.tick(100);
+
+            request.open("get", "/path", true);
+            request.send();
+
+            this.clock.tick(10);
+
             assert.isTrue(request.respond.calledOnce);
         }
     }
